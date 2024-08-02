@@ -7,6 +7,15 @@ return {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
 			"hrsh7th/cmp-nvim-lsp",
+			{ "ray-x/lsp_signature.nvim", opts = {} },
+			{
+				"zeioth/none-ls-autoload.nvim",
+				dependencies = {
+					"williamboman/mason.nvim",
+					"nvimtools/none-ls.nvim",
+				},
+				opts = {},
+			},
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -56,6 +65,13 @@ return {
 							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 						end, "toggle inlay hints")
 					end
+
+					require("lsp_signature").on_attach({
+						bind = true,
+						handler_opts = {
+							border = "rounded",
+						},
+					}, event.buf)
 				end,
 			})
 
@@ -95,6 +111,13 @@ return {
 					end,
 				},
 			})
+
+			-- vim.keymap.set("<leader>lk", function()
+			-- 	require("lsp_signature").toggle_float_win()
+			-- end, { desc = "toggle signature" })
+			-- vim.keymap.set("<leader>lK", function()
+			-- 	vim.lsp.buf.signature_help()
+			-- end, { desc = "toggle signature" })
 		end,
 	},
 }

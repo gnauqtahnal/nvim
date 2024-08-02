@@ -3,11 +3,10 @@ vim.o.relativenumber = true
 vim.o.signcolumn = "yes"
 vim.o.mouse = "a"
 vim.o.conceallevel = 2
-
+vim.o.scrolloff = 9999
 vim.o.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
-
 vim.o.clipboard = "unnamedplus"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
