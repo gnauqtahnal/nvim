@@ -71,7 +71,7 @@ return {
 			sorting = {
 				priority_weight = 2,
 				comparators = {
-					require("cmp_fuzzy_buffer.compare"),
+					-- require("cmp_fuzzy_buffer.compare"),
 					cmp.config.compare.offset,
 					cmp.config.compare.exact,
 					cmp.config.compare.score,
@@ -90,13 +90,17 @@ return {
 				-- },
 				{ name = "nvim_lsp" },
 				{ name = "rg", keyword_length = 3 },
-				{ name = "luasnip" },
-				{ name = "fuzzy_buffer" },
-				{ name = "fuzzy_path" },
+				-- { name = "luasnip" },
+				-- { name = "fuzzy_buffer" },
+				-- { name = "fuzzy_path" },
 			},
 			formatting = {
 				format = require("lspkind").cmp_format({
 					before = require("tailwind-tools.cmp").lspkind_format,
+					mode = "symbol",
+					max_width = 50,
+					ellipsis_char = "...",
+					show_labelDetails = true,
 				}),
 			},
 		})
