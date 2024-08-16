@@ -20,6 +20,10 @@ return {
       { "<leader>l", group = "lsp" },
       { "<leader>f", group = "telescope" },
       { "<leader>s", group = "flash" },
+      { "[", group = "prev" },
+      { "]", group = "next" },
+      { "gs", group = "surround" },
+      { "z", group = "fold" },
     })
   end,
 }

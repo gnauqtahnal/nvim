@@ -1,108 +1,71 @@
 return {
-	"hrsh7th/nvim-cmp",
-	event = "InsertEnter",
-	dependencies = {
-		{
-			"L3MON4D3/LuaSnip",
-			build = (function()
-				if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-					return
-				end
-				return "make install_jsregexp"
-			end)(),
-		},
-		"saadparwaiz1/cmp_luasnip",
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"lukas-reineke/cmp-rg",
-		"tzachar/fuzzy.nvim",
-		"tzachar/cmp-fuzzy-buffer",
-		"tzachar/cmp-fuzzy-path",
-		"roobert/tailwindcss-colorizer-cmp.nvim",
-		"onsails/lspkind.nvim",
-		{
-			"luckasRanarison/tailwind-tools.nvim",
-			opts = {
-				extension = {
-					patterns = {
-						javascript = { "clsx%(([^)]+)%)" },
-					},
-				},
-			},
-		},
-		"lukas-reineke/cmp-under-comparator",
-	},
-	config = function()
-		local cmp = require("cmp")
-		local luasnip = require("luasnip")
+  "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    -- "saadparwaiz1/cmp_luasnip",
+    -- "lukas-reineke/cmp-rg",
+    -- "tzachar/fuzzy.nvim",
+    -- "tzachar/cmp-fuzzy-buffer",
+    -- "tzachar/cmp-fuzzy-path",
+    -- "roobert/tailwindcss-colorizer-cmp.nvim",
+    -- "onsails/lspkind.nvim",
+    -- {
+    --   "luckasRanarison/tailwind-tools.nvim",
+    --   opts = {
+    --     extension = {
+    --       patterns = {
+    --         javascript = { "clsx%(([^)]+)%)" },
+    --       },
+    --     },
+    --   },
+    -- },
+    -- "lukas-reineke/cmp-under-comparator",
+  },
+  config = function()
+    local cmp = require("cmp")
+    local defaults = require("cmp.config.default")()
 
-		luasnip.config.setup()
-
-		cmp.setup({
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
-				end,
-			},
-			completion = { completeopt = "menu,menuone,noinsert" },
-			mapping = cmp.mapping.preset.insert({
-				["<C-n>"] = cmp.mapping.select_next_item(),
-				["<C-p>"] = cmp.mapping.select_prev_item(),
-				["<Tab>"] = cmp.mapping.select_next_item(),
-				["<S-Tab>"] = cmp.mapping.select_prev_item(),
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-y>"] = cmp.mapping.confirm({ select = true }),
-				["<Enter>"] = cmp.mapping.confirm({ select = true }),
-				["<Esc>"] = cmp.mapping.abort(),
-				["<C-Space>"] = cmp.mapping.complete({}),
-				["<C-l>"] = cmp.mapping(function()
-					if luasnip.expand_or_locally_jumpable() then
-						luasnip.expand_or_jump()
-					end
-				end, { "i", "s" }),
-				["<C-h>"] = cmp.mapping(function()
-					if luasnip.locally_jumpable(-1) then
-						luasnip.jump(-1)
-					end
-				end, { "i", "s" }),
-			}),
-			sorting = {
-				priority_weight = 2,
-				comparators = {
-					-- require("cmp_fuzzy_buffer.compare"),
-					cmp.config.compare.offset,
-					cmp.config.compare.exact,
-					cmp.config.compare.score,
-					require("cmp-under-comparator").under,
-					cmp.config.compare.recently_used,
-					cmp.config.compare.kind,
-					cmp.config.compare.sort_text,
-					cmp.config.compare.length,
-					cmp.config.compare.order,
-				},
-			},
-			sources = {
-				-- {
-				--   name = "lazydev",
-				--   group_index = 0,
-				-- },
-				{ name = "nvim_lsp" },
-				{ name = "rg", keyword_length = 3 },
-				-- { name = "luasnip" },
-				-- { name = "fuzzy_buffer" },
-				-- { name = "fuzzy_path" },
-			},
-			formatting = {
-				format = require("lspkind").cmp_format({
-					before = require("tailwind-tools.cmp").lspkind_format,
-					mode = "symbol",
-					max_width = 50,
-					ellipsis_char = "...",
-					show_labelDetails = true,
-				}),
-			},
-		})
-	end,
+    return {
+      snippet = {
+        expand = function(args)
+          vim.snippet.expand(args.body)
+        end,
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      mapping = cmp.mapping.preset.insert({
+        -- ["<C-Space>"] = cmp.mapping.complete(),
+        ["<Esc>"] = cmp.mapping.abort(),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-h>"] = cmp.mapping.close_docs(),
+        ["<C-l>"] = cmp.mapping.open_docs(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-u>"] = cmp.mapping.scroll_docs(4),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      }),
+      completion = {
+        completeopt = "menu,menuone,noinsert,noselect",
+      },
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "path" },
+      }, {
+        { name = "buffer" },
+      }),
+      experimental = {
+        ghost_text = {
+          hl_group = "CmpGhostText",
+        },
+      },
+      sorting = defaults.sorting,
+    }
+  end,
 }
