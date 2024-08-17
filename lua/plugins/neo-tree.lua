@@ -38,6 +38,56 @@ return {
           last_indent_marker = "╰",
           indent_size = 2,
         },
+        git_status = {
+          symbols = {
+            -- Change type
+            added = "✚",
+            deleted = "✖",
+            modified = "",
+            renamed = "󰁕",
+            -- Status type
+            untracked = "",
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
+          },
+        },
+      },
+      source_selector = {
+        winbar = true,
+        statusline = false,
+        show_scrolled_off_parent_node = false,
+        sources = {
+          {
+            source = "filesystem",
+            display_name = " 󰉓 Files ",
+          },
+          {
+            source = "buffers",
+            display_name = " 󰈚 Buffers ",
+          },
+          {
+            source = "git_status",
+            display_name = " 󰊢 Git ",
+          },
+        },
+        content_layout = "center",
+        tabs_layout = "equal",
+        truncation_character = "…",
+        tabs_min_width = nil,
+        tabs_max_width = nil,
+        padding = 0,
+        separator = { left = "▏", right = "▕" },
+        -- separator = { left = "", right = "" },
+        -- separator_active = nil,
+        separator_active = { left = "", right = "", override = "active" },
+        show_separator_on_edge = false,
+        highlight_tab = "NeoTreeTabInactive",
+        highlight_tab_active = "NeoTreeTabActive",
+        highlight_background = "NeoTreeTabInactive",
+        highlight_separator = "NeoTreeTabSeparatorInactive",
+        highlight_separator_active = "NeoTreeTabSeparatorActive",
       },
     }
   end,

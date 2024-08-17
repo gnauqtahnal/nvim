@@ -11,17 +11,28 @@ return {
     -- "tzachar/cmp-fuzzy-buffer",
     -- "tzachar/cmp-fuzzy-path",
     -- "roobert/tailwindcss-colorizer-cmp.nvim",
-    -- "onsails/lspkind.nvim",
-    -- {
-    --   "luckasRanarison/tailwind-tools.nvim",
-    --   opts = {
-    --     extension = {
-    --       patterns = {
-    --         javascript = { "clsx%(([^)]+)%)" },
-    --       },
-    --     },
-    --   },
-    -- },
+    "onsails/lspkind.nvim",
+    {
+
+      "luckasRanarison/tailwind-tools.nvim",
+      name = "tailwind-tools",
+      build = ":UpdateRemotePlugins",
+      dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-telescope/telescope.nvim",
+        "neovim/nvim-lspconfig",
+      },
+      opts = {
+        extension = {
+          patterns = {
+            javascript = { "clsx%(([^)]+)%)" },
+            javascriptreact = { "clsx%(([^)]+)%)" },
+            typescript = { "clsx%(([^)]+)%)" },
+            typescriptreact = { "clsx%(([^)]+)%)" },
+          },
+        },
+      },
+    },
     -- "lukas-reineke/cmp-under-comparator",
   },
   config = function()
@@ -66,6 +77,11 @@ return {
         },
       },
       sorting = defaults.sorting,
+      formatting = {
+        format = require("lspkind").cmp_format({
+          before = require("tailwind-tools.cmp").lspkind_format,
+        }),
+      },
     }
   end,
 }
