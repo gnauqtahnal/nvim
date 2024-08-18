@@ -1,6 +1,5 @@
 return {
   "JoosepAlviste/nvim-ts-context-commentstring",
-  lazy = true,
   init = function()
     if vim.fn.has("nvim-0.10") == 1 then
       -- HACK: add workaround for native comments: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/109

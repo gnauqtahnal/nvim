@@ -31,14 +31,13 @@ return {
   opts = {
     options = {
       theme = bubbles_theme,
-      component_separators = "",
-      -- component_separators = { left = "", right = "" },
+      -- component_separators = "",
+      component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
     },
     sections = {
       lualine_a = {
         {
-          -- "mode",
           "branch",
           separator = { left = "" },
           right_padding = 2,
@@ -88,10 +87,10 @@ return {
           icon_only = false, -- Display only an icon for filetype
           icon = { align = "left" }, -- Display filetype icon on the right hand side
         },
-        "progress",
+        { "progress", separator = " ", padding = { left = 1, right = 0 } },
       },
       lualine_z = {
-        { "location", separator = { right = "" }, left_padding = 2 },
+        { "location", separator = { right = "" }, padding = { left = 0, right = 1 } },
       },
     },
     inactive_sections = {

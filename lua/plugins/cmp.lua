@@ -1,6 +1,5 @@
 return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
@@ -39,7 +38,7 @@ return {
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")()
 
-    return {
+    cmp.setup({
       snippet = {
         expand = function(args)
           vim.snippet.expand(args.body)
@@ -71,17 +70,17 @@ return {
       }, {
         { name = "buffer" },
       }),
-      experimental = {
-        ghost_text = {
-          hl_group = "CmpGhostText",
-        },
-      },
+      -- experimental = {
+      --   ghost_text = {
+      --     hl_group = "CmpGhostText",
+      --   },
+      -- },
       sorting = defaults.sorting,
       formatting = {
         format = require("lspkind").cmp_format({
           before = require("tailwind-tools.cmp").lspkind_format,
         }),
       },
-    }
+    })
   end,
 }
